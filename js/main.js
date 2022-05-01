@@ -8,9 +8,14 @@ let box6 = $('.box6')
 let box7 = $('.box7')
 let box8 = $('.box8')
 let box9 = $('.box9')
-
 let count = 0
 
+let heading = $('.heading')
+heading.innerText = "X's Turn"
+
+
+
+// game functionality
 function clicked(box) {
     if (count === 0 || count % 2 ===0) {
         box.innerHTML = 'X'
@@ -22,6 +27,7 @@ function clicked(box) {
         endGame()
     }
     count++
+    changeHeading()
 }
 
 let boxes = document.querySelectorAll('.box')
@@ -48,9 +54,21 @@ function checkWin() {
     }
 }
 
-// function gameOn() {
-//     let gameOn = true
-//     while (gameOn) {
-//         checkWin()
-//     }
-// }
+// change the heading
+function changeHeading() {
+    if (count === 0 || count % 2 === 0) {
+        heading.innerText = "X's Turn"
+    } else {
+        heading.innerText = "Y's Turn"
+    }
+}
+
+// end game 
+function endGame() {
+    if (count % 2 === 0) {
+        alert('X wins')
+    } else {
+        alert('Y wins')
+    }
+    console.log('game over')
+}
