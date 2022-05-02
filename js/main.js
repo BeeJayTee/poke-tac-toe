@@ -9,6 +9,13 @@ let box7 = $('.box7')
 let box8 = $('.box8')
 let box9 = $('.box9')
 let count = 0
+let popUp = $('.popUp')
+let screen = $('.screen')
+let board = $('.board')
+
+// all the boxes
+let boxes = document.querySelectorAll('.box')
+boxes = Array.from(boxes)
 
 // set original heading
 let heading = $('.heading')
@@ -23,7 +30,7 @@ function clicked(box) {
     if (count === 0 || count % 2 ===0) {
         box.innerHTML = 'X'
         box.style.background = xColor
-    } else {
+    } else if (count % 2 === 1 && count !== 9) {
         box.innerHTML = 'O'
         box.style.background = oColor
     }
@@ -33,20 +40,14 @@ function clicked(box) {
         return
     }
     count++
+    if (!checkWin() && count === 9) {
+        console.log('tie')
+        endGame()
+        return
+    }
     console.log(count)
     changeHeading()
 }
-
-// event listeners for boxes
-let boxes = document.querySelectorAll('.box')
-boxes = Array.from(boxes)
-boxes.forEach(box => {
-    box.addEventListener('click', function() {
-        if (!box.innerHTML) {
-            clicked(box)
-        }
-    })
-})
 
 // check if a player has won
 function checkWin() {
@@ -75,17 +76,26 @@ function changeHeading() {
 // end game 
 function endGame() {
     if (count % 2 === 0) {
-        alert('X wins')
-    } else {
-        alert('Y wins')
+        heading.innerText = 'X Wins!'
+    } else if (count % 2 === 1 && count !== 9) {
+        heading.innerText = 'Y Wins!'
+    } else if (count === 9) {
+        heading.innerText = "It's a tie!"
     }
+    board.style.filter = 'blur(100px)'
+    screen.style.display = 'block'
+    popUp.style.display = 'block'
+    popUp.addEventListener('click', clearBoxes)
     console.log('game over')
-    count = 0
-    clearBoxes()
 }
 
 // clear boxes
 function clearBoxes() {
+    board.style.filter = 'blur(0)'
+    popUp.style.display = 'none'
+    screen.style.display = 'none'
+    heading.innerText = "X's Turn"
+    count = 0
     box1.innerHTML = '' 
     box2.innerHTML = '' 
     box3.innerHTML = '' 
@@ -106,3 +116,13 @@ function clearBoxes() {
     box9.style.background = 'blue'
     count = 0
 }
+
+
+// main game
+boxes.forEach(box => {
+    box.addEventListener('click', function() {
+        if (!box.innerHTML) {
+            clicked(box)
+        }
+    })
+})

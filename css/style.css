@@ -6,8 +6,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1%;
+  padding-top: .5%;
   /* position: relative; */
+  background: #fcfbe1;
 }
 
 .row {
@@ -37,4 +38,18 @@ body {
   background: black;
   padding: 1rem 2rem;
   font-size: 3rem;
+  display: none;
+  z-index: 1000;
+}
+
+.popUp:hover {
+  cursor: pointer;
+}
+
+.screen {
+  width: 100%;
+  height: 98vh;
+  position: absolute;
+  z-index: 50;
+  display: none;
 }
