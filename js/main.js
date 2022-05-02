@@ -78,7 +78,7 @@ function endGame() {
     if (count % 2 === 0) {
         heading.innerText = 'X Wins!'
     } else if (count % 2 === 1 && count !== 9) {
-        heading.innerText = 'Y Wins!'
+        heading.innerText = 'O Wins!'
     } else if (count === 9) {
         heading.innerText = "It's a tie!"
     }
