@@ -10,26 +10,34 @@ let box8 = $('.box8')
 let box9 = $('.box9')
 let count = 0
 
+// set original heading
 let heading = $('.heading')
 heading.innerText = "X's Turn"
 
-
+// color variables for X and O
+const xColor = '#d4db04'
+const oColor = '#b802a2'
 
 // game functionality
 function clicked(box) {
     if (count === 0 || count % 2 ===0) {
         box.innerHTML = 'X'
+        box.style.background = xColor
     } else {
         box.innerHTML = 'O'
+        box.style.background = oColor
     }
     if (checkWin()) {
         console.log('winner')
         endGame()
+        return
     }
     count++
+    console.log(count)
     changeHeading()
 }
 
+// event listeners for boxes
 let boxes = document.querySelectorAll('.box')
 boxes = Array.from(boxes)
 boxes.forEach(box => {
@@ -40,6 +48,7 @@ boxes.forEach(box => {
     })
 })
 
+// check if a player has won
 function checkWin() {
     if (box1.innerHTML && box1.innerHTML === box2.innerHTML && box1.innerHTML === box3.innerHTML) {
         return true
@@ -71,4 +80,29 @@ function endGame() {
         alert('Y wins')
     }
     console.log('game over')
+    count = 0
+    clearBoxes()
+}
+
+// clear boxes
+function clearBoxes() {
+    box1.innerHTML = '' 
+    box2.innerHTML = '' 
+    box3.innerHTML = '' 
+    box4.innerHTML = '' 
+    box5.innerHTML = '' 
+    box6.innerHTML = '' 
+    box7.innerHTML = '' 
+    box8.innerHTML = '' 
+    box9.innerHTML = '' 
+    box1.style.background = 'blue'
+    box2.style.background = 'blue'
+    box3.style.background = 'blue'
+    box4.style.background = 'blue'
+    box5.style.background = 'blue'
+    box6.style.background = 'blue'
+    box7.style.background = 'blue'
+    box8.style.background = 'blue'
+    box9.style.background = 'blue'
+    count = 0
 }
