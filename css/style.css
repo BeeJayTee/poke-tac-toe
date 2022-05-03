@@ -90,6 +90,10 @@ body {
   border: 4px solid #FFCC00;
 }
 
+.player h2 {
+  visibility: hidden;
+}
+
 .player1Container {
   margin-left: 5%;
 }

@@ -12,6 +12,10 @@ let count = 0
 let popUp = $('.popUp')
 let screen = $('.screen')
 let board = $('.board')
+let xPokemonName = ''
+let oPokemonName = ''
+let xPokemonPicture = ''
+let oPokemonPicture = ''
 
 // all the boxes
 let boxes = document.querySelectorAll('.box')
@@ -19,7 +23,7 @@ boxes = Array.from(boxes)
 
 // set original heading
 let heading = $('.heading')
-heading.innerText = "X's Turn"
+heading.innerText = "Welcome, please enter pokemon names to begin"
 
 // color variables for X and O
 const xColor = '#d4db04'
@@ -116,6 +120,41 @@ function clearBoxes() {
     box9.style.background = 'blue'
     count = 0
 }
+
+
+// getting the pokemon for each user
+var player1Value = ''
+$('#player1Submit').addEventListener('click', function() {
+    player1Value = $('#player1Input').value
+    fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value}`)
+        .then(response=>response.json())
+        .then(data => {
+            if (data.name) {
+                $('.player1Container h2').innerText = data.name
+                $('.player1Container h2').style.visibility = 'visible'
+                $('.player1Container form').style.visibility = 'hidden'
+                $('.player1Container img').setAttribute('src', data.sprites.other)
+            }
+        })
+        .catch(err=>console.log(err))
+})
+$('#player2Submit').addEventListener('click', function() {
+    player2Value = $('#player2Input').value
+    fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value}`)
+        .then(response=>response.json())
+        .then(data => {
+            if (data.name) {
+                $('.player2Container h2').innerText = data.name
+                $('.player2Container h2').style.visibility = 'visible'
+                $('.player2Container form').style.visibility = 'hidden'
+            }
+        })
+        .catch(err=>console.log(err))
+})
+
+
+
+
 
 
 // main game
