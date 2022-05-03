@@ -3,12 +3,20 @@
 }
 
 body {
+  background: #fcfbe1;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainGameContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: .5%;
   /* position: relative; */
-  background: #fcfbe1;
 }
 
 .row {
@@ -52,4 +60,40 @@ body {
   position: absolute;
   z-index: 50;
   display: none;
+}
+
+
+/* PLAYER SECTIONS */
+.player {
+  margin-top: 30vh;
+}
+
+.player form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.player input[type='button'] {
+  color: white;
+  background: #0A285F;
+  border: 3px solid #D5A100;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+}
+
+.player input[type='text'] {
+  border: 4px solid rgba(0,0,0,.15);
+}
+
+.player input[type='text']:focus {
+  border: 4px solid #FFCC00;
+}
+
+.player1Container {
+  margin-left: 5%;
+}
+
+.player2Container {
+  margin-right: 5%;
 }
