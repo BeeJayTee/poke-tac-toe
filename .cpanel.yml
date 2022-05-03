@@ -3,3 +3,5 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/thebrand/public_html/
     - /bin/cp -R * $DEPLOYPATH
+
+    
