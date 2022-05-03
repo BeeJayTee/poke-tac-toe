@@ -178,7 +178,7 @@ $('#player2Submit').addEventListener('click', function() {
 $('#player2Input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault()
-        player1Value = $('#player2Input').value
+        player2Value = $('#player2Input').value
         fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value}`)
             .then(response=>response.json())
             .then(data => {
