@@ -23,7 +23,7 @@ boxes = Array.from(boxes)
 
 // set original heading
 let heading = $('.heading')
-heading.innerText = "Welcome, please enter pokemon names to beginPoop"
+heading.innerText = "Welcome, please enter pokemon names to beginPoops"
 
 // color variables for X and O
 const xColor = '#d4db04'
