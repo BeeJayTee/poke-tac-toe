@@ -12,10 +12,10 @@ let count = 0
 let popUp = $('.popUp')
 let screen = $('.screen')
 let board = $('.board')
-let xPokemonName = ''
-let oPokemonName = ''
-let xPokemonPicture = ''
-let oPokemonPicture = ''
+var xName = ''
+var oName = ''
+var xPictureUrl = ''
+var oPictureUrl = ''
 
 // all the boxes
 let boxes = document.querySelectorAll('.box')
@@ -32,11 +32,11 @@ const oColor = '#b802a2'
 // game functionality
 function clicked(box) {
     if (count === 0 || count % 2 ===0) {
-        box.innerHTML = 'X'
-        box.style.background = xColor
+        box.style.background = `url(${xPictureUrl})`
+        box.style[`background-size`] = 'cover'
     } else if (count % 2 === 1 && count !== 9) {
-        box.innerHTML = 'O'
-        box.style.background = oColor
+        box.style.background = `url(${oPictureUrl})`
+        box.style[`background-size`] = 'cover'
     }
     if (checkWin()) {
         console.log('winner')
@@ -55,15 +55,15 @@ function clicked(box) {
 
 // check if a player has won
 function checkWin() {
-    if (box1.innerHTML && box1.innerHTML === box2.innerHTML && box1.innerHTML === box3.innerHTML) {
+    if (box1.style.background && box1.style.background === box2.style.background && box1.style.background === box3.style.background) {
         return true
-    } else if (box4.innerHTML && box4.innerHTML === box5.innerHTML && box4.innerHTML === box6.innerHTML) {
+    } else if (box4.style.background && box4.style.background === box5.style.background && box4.style.background === box6.style.background) {
         return true
-    } else if (box7.innerHTML && box7.innerHTML === box8.innerHTML && box7.innerHTML === box9.innerHTML) {
+    } else if (box7.style.background && box7.style.background === box8.style.background && box7.style.background === box9.style.background) {
         return true
-    } else if (box1.innerHTML && box1.innerHTML === box5.innerHTML && box1.innerHTML === box9.innerHTML) {
+    } else if (box1.style.background && box1.style.background === box5.style.background && box1.style.background === box9.style.background) {
         return true
-    } else if (box3.innerHTML && box3.innerHTML === box5.innerHTML && box3.innerHTML === box7.innerHTML) {
+    } else if (box3.style.background && box3.style.background === box5.style.background && box3.style.background === box7.style.background) {
         return true
     }
 }
@@ -71,18 +71,18 @@ function checkWin() {
 // change the heading
 function changeHeading() {
     if (count === 0 || count % 2 === 0) {
-        heading.innerText = "X's Turn"
+        heading.innerText = `${xName}'s Turn`
     } else {
-        heading.innerText = "Y's Turn"
+        heading.innerText = `${oName}'s Turn`
     }
 }
 
 // end game 
 function endGame() {
     if (count % 2 === 0) {
-        heading.innerText = 'X Wins!'
+        heading.innerText = `${xName} Wins`
     } else if (count % 2 === 1 && count !== 9) {
-        heading.innerText = 'O Wins!'
+        heading.innerText = `${oName} Wins`
     } else if (count === 9) {
         heading.innerText = "It's a tie!"
     }
@@ -98,26 +98,17 @@ function clearBoxes() {
     board.style.filter = 'blur(0)'
     popUp.style.display = 'none'
     screen.style.display = 'none'
-    heading.innerText = "X's Turn"
+    heading.innerText = `${xName}'s Turn`
     count = 0
-    box1.innerHTML = '' 
-    box2.innerHTML = '' 
-    box3.innerHTML = '' 
-    box4.innerHTML = '' 
-    box5.innerHTML = '' 
-    box6.innerHTML = '' 
-    box7.innerHTML = '' 
-    box8.innerHTML = '' 
-    box9.innerHTML = '' 
-    box1.style.background = 'blue'
-    box2.style.background = 'blue'
-    box3.style.background = 'blue'
-    box4.style.background = 'blue'
-    box5.style.background = 'blue'
-    box6.style.background = 'blue'
-    box7.style.background = 'blue'
-    box8.style.background = 'blue'
-    box9.style.background = 'blue'
+    box1.style.background = '' 
+    box2.style.background = '' 
+    box3.style.background = '' 
+    box4.style.background = '' 
+    box5.style.background = '' 
+    box6.style.background = '' 
+    box7.style.background = '' 
+    box8.style.background = '' 
+    box9.style.background = '' 
     count = 0
 }
 
@@ -133,10 +124,37 @@ $('#player1Submit').addEventListener('click', function() {
                 $('.player1Container h2').innerText = data.name
                 $('.player1Container h2').style.visibility = 'visible'
                 $('.player1Container form').style.visibility = 'hidden'
-                $('.player1Container img').setAttribute('src', data.sprites.other)
+                xPictureUrl = data.sprites.other['official-artwork'].front_default
+                $('.player1Container img').setAttribute('src', xPictureUrl)
+                xName = data.name
+            }
+            if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                changeHeading()
             }
         })
         .catch(err=>console.log(err))
+})
+$('#player1Input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault()
+        player1Value = $('#player1Input').value
+        fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value}`)
+            .then(response=>response.json())
+            .then(data => {
+                if (data.name) {
+                    $('.player1Container h2').innerText = data.name
+                    $('.player1Container h2').style.visibility = 'visible'
+                    $('.player1Container form').style.visibility = 'hidden'
+                    xPictureUrl = data.sprites.other['official-artwork'].front_default
+                    $('.player1Container img').setAttribute('src', xPictureUrl)
+                    xName = data.name
+                }
+                if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                    changeHeading()
+                }
+            })
+            .catch(err=>console.log(err))
+    }
 })
 $('#player2Submit').addEventListener('click', function() {
     player2Value = $('#player2Input').value
@@ -147,10 +165,43 @@ $('#player2Submit').addEventListener('click', function() {
                 $('.player2Container h2').innerText = data.name
                 $('.player2Container h2').style.visibility = 'visible'
                 $('.player2Container form').style.visibility = 'hidden'
+                oPictureUrl = data.sprites.other['official-artwork'].front_default
+                $('.player2Container img').setAttribute('src', oPictureUrl)
+                oName = data.name
+            }
+            if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                changeHeading()
             }
         })
         .catch(err=>console.log(err))
 })
+$('#player2Input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault()
+        player1Value = $('#player2Input').value
+        fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value}`)
+            .then(response=>response.json())
+            .then(data => {
+                if (data.name) {
+                    $('.player2Container h2').innerText = data.name
+                    $('.player2Container h2').style.visibility = 'visible'
+                    $('.player2Container form').style.visibility = 'hidden'
+                    oPictureUrl = data.sprites.other['official-artwork'].front_default
+                    $('.player2Container img').setAttribute('src', oPictureUrl)
+                    oName = data.name
+                }
+                if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                    changeHeading()
+                }
+            })
+            .catch(err=>console.log(err))
+    }
+})
+
+// check to see if both pokemon names exist
+function namesExist() {
+    return (xName !== '' && oName !== '')
+}
 
 
 
@@ -160,7 +211,7 @@ $('#player2Submit').addEventListener('click', function() {
 // main game
 boxes.forEach(box => {
     box.addEventListener('click', function() {
-        if (!box.innerHTML) {
+        if (!box.innerHTML && namesExist()) {
             clicked(box)
         }
     })

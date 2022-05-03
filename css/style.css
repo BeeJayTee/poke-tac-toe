@@ -94,6 +94,14 @@ body {
   visibility: hidden;
 }
 
+.player .imageContainer {
+  width: 300px;
+}
+
+.player img {
+  width: 100%;
+}
+
 .player1Container {
   margin-left: 5%;
 }
