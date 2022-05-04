@@ -16,6 +16,9 @@ var xName = ''
 var oName = ''
 var xPictureUrl = ''
 var oPictureUrl = ''
+// color variables for X and O
+const xColor = '#FF0000'
+const oColor = '#3B4CCA'
 
 // all the boxes
 let boxes = document.querySelectorAll('.box')
@@ -25,20 +28,20 @@ boxes = Array.from(boxes)
 let heading = $('.heading')
 heading.innerText = "Welcome, please enter pokemon names to begin"
 
-// color variables for X and O
-const xColor = '#d4db04'
-const oColor = '#b802a2'
+
 
 // on box clixk
 function clicked(box) {
     if (count === 0 || count % 2 ===0) {
-        box.style.background = `url(${xPictureUrl})`
+        box.style['background-color'] = xColor
+        box.style['background-image'] = `url(${xPictureUrl})`
         box.style[`background-size`] = 'cover'
         box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
         box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
         box.style['box-shadow'] = 'inset 0 0 10px #000000'
     } else if (count % 2 === 1 && count !== 9) {
-        box.style.background = `url(${oPictureUrl})`
+        box.style['background-color'] = oColor
+        box.style['background-image'] = `url(${oPictureUrl})`
         box.style[`background-size`] = 'cover'
         box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
         box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
@@ -61,15 +64,21 @@ function clicked(box) {
 
 // check if a player has won
 function checkWin() {
-    if (box1.style.background && box1.style.background === box2.style.background && box1.style.background === box3.style.background) {
+    if (box1.style['background-image'] && box1.style['background-image'] === box2.style['background-image'] && box1.style['background-image'] === box3.style['background-image']) {
         return true
-    } else if (box4.style.background && box4.style.background === box5.style.background && box4.style.background === box6.style.background) {
+    } else if (box4.style['background-image'] && box4.style['background-image'] === box5.style['background-image'] && box4.style['background-image'] === box6.style['background-image']) {
         return true
-    } else if (box7.style.background && box7.style.background === box8.style.background && box7.style.background === box9.style.background) {
+    } else if (box7.style['background-image'] && box7.style['background-image'] === box8.style['background-image'] && box7.style['background-image'] === box9.style['background-image']) {
         return true
-    } else if (box1.style.background && box1.style.background === box5.style.background && box1.style.background === box9.style.background) {
+    } else if (box1.style['background-image'] && box1.style['background-image'] === box5.style['background-image'] && box1.style['background-image'] === box9.style['background-image']) {
         return true
-    } else if (box3.style.background && box3.style.background === box5.style.background && box3.style.background === box7.style.background) {
+    } else if (box3.style['background-image'] && box3.style['background-image'] === box5.style['background-image'] && box3.style['background-image'] === box7.style['background-image']) {
+        return true
+    } else if (box1.style['background-image'] && box1.style['background-image'] === box4.style['background-image'] && box1.style['background-image'] === box7.style['background-image']) {
+        return true
+    } else if (box2.style['background-image'] && box2.style['background-image'] === box5.style['background-image'] && box2.style['background-image'] === box8.style['background-image']) {
+        return true
+    } else if (box3.style['background-image'] && box3.style['background-image'] === box6.style['background-image'] && box3.style['background-image'] === box9.style['background-image']) {
         return true
     }
 }
@@ -131,19 +140,24 @@ $('#player1Submit').addEventListener('click', function() {
     fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value}`)
         .then(response=>response.json())
         .then(data => {
+            console.log(data)
             if (data.name) {
                 $('.player1Container h2').innerText = data.name
                 $('.player1Container h2').style.visibility = 'visible'
+                $('.player1Container h2').style.color = xColor
                 $('.player1Container form').style.display = 'none'
                 xPictureUrl = data.sprites.other['official-artwork'].front_default
                 $('.player1Container img').setAttribute('src', xPictureUrl)
                 xName = data.name
             }
-            if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+            if ($('.player1Container img').getAttribute('src') && $('.player2Container img').getAttribute('src')) {
                 changeHeading()
             }
         })
-        .catch(err=>console.log(err))
+        .catch(err=> {
+            $('.player1Container h2').innerText = 'Pokemon does not exist'
+            $('.player1Container h2').style.visibility = 'visible'
+        })
 })
 $('#player1Input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -155,16 +169,20 @@ $('#player1Input').addEventListener('keypress', function(e) {
                 if (data.name) {
                     $('.player1Container h2').innerText = data.name
                     $('.player1Container h2').style.visibility = 'visible'
+                    $('.player1Container h2').style.color = xColor
                     $('.player1Container form').style.display = 'none'
                     xPictureUrl = data.sprites.other['official-artwork'].front_default
                     $('.player1Container img').setAttribute('src', xPictureUrl)
                     xName = data.name
                 }
-                if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                if ($('.player1Container img').getAttribute('src') && $('.player2Container img').getAttribute('src')) {
                     changeHeading()
                 }
             })
-            .catch(err=>console.log(err))
+            .catch(err=> {
+                $('.player1Container h2').innerText = 'Pokemon does not exist'
+                $('.player1Container h2').style.visibility = 'visible'
+            })
     }
 })
 $('#player2Submit').addEventListener('click', function() {
@@ -175,16 +193,20 @@ $('#player2Submit').addEventListener('click', function() {
             if (data.name) {
                 $('.player2Container h2').innerText = data.name
                 $('.player2Container h2').style.visibility = 'visible'
+                $('.player2Container h2').style.color = oColor
                 $('.player2Container form').style.display = 'none'
                 oPictureUrl = data.sprites.other['official-artwork'].front_default
                 $('.player2Container img').setAttribute('src', oPictureUrl)
                 oName = data.name
             }
-            if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+            if ($('.player1Container img').getAttribute('src') && $('.player2Container img').getAttribute('src')) {
                 changeHeading()
             }
         })
-        .catch(err=>console.log(err))
+        .catch(err=> {
+            $('.player2Container h2').innerText = 'Pokemon does not exist'
+            $('.player2Container h2').style.visibility = 'visible'
+        })
 })
 $('#player2Input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -196,16 +218,20 @@ $('#player2Input').addEventListener('keypress', function(e) {
                 if (data.name) {
                     $('.player2Container h2').innerText = data.name
                     $('.player2Container h2').style.visibility = 'visible'
+                    $('.player2Container h2').style.color = oColor
                     $('.player2Container form').style.display = 'none'
                     oPictureUrl = data.sprites.other['official-artwork'].front_default
                     $('.player2Container img').setAttribute('src', oPictureUrl)
                     oName = data.name
                 }
-                if ($('.player1Container form').style.visibility === 'hidden' && $('.player2Container form').style.visibility === 'hidden') {
+                if ($('.player1Container img').getAttribute('src') && $('.player2Container img').getAttribute('src')) {
                     changeHeading()
                 }
             })
-            .catch(err=>console.log(err))
+            .catch(err=> {
+                $('.player2Container h2').innerText = 'Pokemon does not exist'
+                $('.player2Container h2').style.visibility = 'visible'
+            })
     }
 })
 
@@ -222,7 +248,7 @@ function namesExist() {
 // main game
 boxes.forEach(box => {
     box.addEventListener('mouseenter', function() {
-        if (namesExist()) {
+        if (namesExist() && !box.style['background-image']) {
             box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
             box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
             box.style['box-shadow'] = 'inset 0 0 10px #000000'
@@ -230,15 +256,20 @@ boxes.forEach(box => {
         }
     })
     box.addEventListener('mouseleave', function() {
-        if (namesExist()) {
+        if (namesExist() && !box.style['background-image']) {
             box.style['-moz-box-shadow'] = 'none'
             box.style['-webkit-box-shadow'] = 'none'
             box.style['box-shadow'] = 'none'
             box.style.cursor = 'default';
         }
     })
+    box.addEventListener('mouseover', function() {
+        if (box.style['background-image']) {
+            box.style.cursor = 'default';
+        }
+    })
     box.addEventListener('click', function() {
-        if (!box.innerHTML && namesExist()) {
+        if (!box.style['background-image'] && namesExist()) {
             clicked(box)
         }
     })

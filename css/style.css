@@ -1,10 +1,20 @@
+:root {
+  --red: #FF0000;
+  --darkRed: #800000;
+  --blue: #3B4CCA;
+  --darkBlue: #151c4a;
+}
+
 *{
   box-sizing: border-box;
   font-family: 'Koulen', cursive;
 }
 
 body {
-  background: #1D63DC;
+  background: #5ca904;
+  background-image: url(../img/pokeBG.png);
+  background-repeat: no-repeat;
+  background-size: fill;
 }
 
 .container {
@@ -17,7 +27,6 @@ body {
   flex-direction: column;
   align-items: center;
   padding-top: .5%;
-  /* position: relative; */
 }
 
 .row {
@@ -30,11 +39,24 @@ body {
   width: 12vw;
   max-width: 200px;
   border: 1px solid black;
-  background: blue;
+  background: #2b2b2b;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 10rem;
+}
+
+.box1 {
+  border-radius: 10% 0 0 0;
+}
+.box3 {
+  border-radius: 0 10% 0 0;
+}
+.box7 {
+  border-radius: 0 0 0 10%;
+}
+.box9 {
+  border-radius: 0 0 10% 0;
 }
 
 .popUp {
@@ -72,20 +94,57 @@ body {
   text-align: center;
 }
 
-.player input[type='button'] {
+.player1Container label {
+  color: var(--red);
+  font-size: 2rem;
+}
+
+.player2Container label {
+  color: var(--blue);
+  font-size: 2rem;
+}
+
+.player1Container input[type='button'] {
   color: white;
-  background: #0A285F;
-  border: 3px solid #D5A100;
+  background: var(--red);
+  border: none;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+}
+.player1Container input[type='button']:hover {
+  background: var(--darkRed);
+  cursor: pointer;
+}
+
+.player2Container input[type='button'] {
+  color: white;
+  background: var(--blue);
+  border: none;
   padding: 1rem 2rem;
   margin-top: 1rem;
 }
 
-.player input[type='text'] {
-  border: 4px solid rgba(0,0,0,.15);
+.player2Container input[type='button']:hover {
+  background: var(--darkBlue);
+  cursor: pointer;
 }
 
-.player input[type='text']:focus {
-  border: 4px solid #FFCC00;
+.player1Container input[type='text'] {
+  border: 6px solid rgba(0,0,0,.15);
+  height: 3rem;
+}
+
+.player2Container input[type='text'] {
+  border: 6px solid rgba(0,0,0,.15);
+  height: 3rem;
+}
+
+.player1Container input[type='text']:focus {
+  border: 6px solid var(--red);
+}
+
+.player2Container input[type='text']:focus {
+  border: 6px solid var(--blue);
 }
 
 .player h2 {
@@ -93,7 +152,7 @@ body {
 }
 
 .player .imageContainer {
-  width: 300px;
+  width: 20vw;
   /* background: red; */
 }
 
