@@ -137,7 +137,7 @@ function clearBoxes() {
 var player1Value = ''
 $('#player1Submit').addEventListener('click', function() {
     player1Value = $('#player1Input').value
-    fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value.toLowerCase()}`)
         .then(response=>response.json())
         .then(data => {
             console.log(data)
@@ -163,7 +163,7 @@ $('#player1Input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault()
         player1Value = $('#player1Input').value
-        fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value}`)
+        fetch(`https://pokeapi.co/api/v2/pokemon/${player1Value.toLowerCase()}`)
             .then(response=>response.json())
             .then(data => {
                 if (data.name) {
@@ -187,7 +187,7 @@ $('#player1Input').addEventListener('keypress', function(e) {
 })
 $('#player2Submit').addEventListener('click', function() {
     player2Value = $('#player2Input').value
-    fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value.toLowerCase()}`)
         .then(response=>response.json())
         .then(data => {
             if (data.name) {
@@ -212,7 +212,7 @@ $('#player2Input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault()
         player2Value = $('#player2Input').value
-        fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value}`)
+        fetch(`https://pokeapi.co/api/v2/pokemon/${player2Value.toLowerCase()}`)
             .then(response=>response.json())
             .then(data => {
                 if (data.name) {
