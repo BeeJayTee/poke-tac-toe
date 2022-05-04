@@ -29,14 +29,20 @@ heading.innerText = "Welcome, please enter pokemon names to begin"
 const xColor = '#d4db04'
 const oColor = '#b802a2'
 
-// game functionality
+// on box clixk
 function clicked(box) {
     if (count === 0 || count % 2 ===0) {
         box.style.background = `url(${xPictureUrl})`
         box.style[`background-size`] = 'cover'
+        box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
+        box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
+        box.style['box-shadow'] = 'inset 0 0 10px #000000'
     } else if (count % 2 === 1 && count !== 9) {
         box.style.background = `url(${oPictureUrl})`
         box.style[`background-size`] = 'cover'
+        box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
+        box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
+        box.style['box-shadow'] = 'inset 0 0 10px #000000'
     }
     if (checkWin()) {
         console.log('winner')
@@ -108,7 +114,12 @@ function clearBoxes() {
     box6.style.background = '' 
     box7.style.background = '' 
     box8.style.background = '' 
-    box9.style.background = '' 
+    box9.style.background = ''
+    boxes.forEach(box => {
+        box.style['-moz-box-shadow'] = 'none'
+        box.style['-webkit-box-shadow'] = 'none'
+        box.style['box-shadow'] = 'none'
+    }) 
     count = 0
 }
 
@@ -123,7 +134,7 @@ $('#player1Submit').addEventListener('click', function() {
             if (data.name) {
                 $('.player1Container h2').innerText = data.name
                 $('.player1Container h2').style.visibility = 'visible'
-                $('.player1Container form').style.visibility = 'hidden'
+                $('.player1Container form').style.display = 'none'
                 xPictureUrl = data.sprites.other['official-artwork'].front_default
                 $('.player1Container img').setAttribute('src', xPictureUrl)
                 xName = data.name
@@ -144,7 +155,7 @@ $('#player1Input').addEventListener('keypress', function(e) {
                 if (data.name) {
                     $('.player1Container h2').innerText = data.name
                     $('.player1Container h2').style.visibility = 'visible'
-                    $('.player1Container form').style.visibility = 'hidden'
+                    $('.player1Container form').style.display = 'none'
                     xPictureUrl = data.sprites.other['official-artwork'].front_default
                     $('.player1Container img').setAttribute('src', xPictureUrl)
                     xName = data.name
@@ -164,7 +175,7 @@ $('#player2Submit').addEventListener('click', function() {
             if (data.name) {
                 $('.player2Container h2').innerText = data.name
                 $('.player2Container h2').style.visibility = 'visible'
-                $('.player2Container form').style.visibility = 'hidden'
+                $('.player2Container form').style.display = 'none'
                 oPictureUrl = data.sprites.other['official-artwork'].front_default
                 $('.player2Container img').setAttribute('src', oPictureUrl)
                 oName = data.name
@@ -185,7 +196,7 @@ $('#player2Input').addEventListener('keypress', function(e) {
                 if (data.name) {
                     $('.player2Container h2').innerText = data.name
                     $('.player2Container h2').style.visibility = 'visible'
-                    $('.player2Container form').style.visibility = 'hidden'
+                    $('.player2Container form').style.display = 'none'
                     oPictureUrl = data.sprites.other['official-artwork'].front_default
                     $('.player2Container img').setAttribute('src', oPictureUrl)
                     oName = data.name
@@ -210,6 +221,22 @@ function namesExist() {
 
 // main game
 boxes.forEach(box => {
+    box.addEventListener('mouseenter', function() {
+        if (namesExist()) {
+            box.style['-moz-box-shadow'] = 'inset 0 0 10px #000000'
+            box.style['-webkit-box-shadow'] = 'inset 0 0 10px #000000'
+            box.style['box-shadow'] = 'inset 0 0 10px #000000'
+            box.style.cursor = 'crosshair';
+        }
+    })
+    box.addEventListener('mouseleave', function() {
+        if (namesExist()) {
+            box.style['-moz-box-shadow'] = 'none'
+            box.style['-webkit-box-shadow'] = 'none'
+            box.style['box-shadow'] = 'none'
+            box.style.cursor = 'default';
+        }
+    })
     box.addEventListener('click', function() {
         if (!box.innerHTML && namesExist()) {
             clicked(box)

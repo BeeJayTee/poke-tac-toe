@@ -1,9 +1,10 @@
 *{
   box-sizing: border-box;
+  font-family: 'Koulen', cursive;
 }
 
 body {
-  background: #fcfbe1;
+  background: #1D63DC;
 }
 
 .container {
@@ -24,19 +25,16 @@ body {
 }
 
 .box {
-  height: 200px;
-  width: 200px;
+  height: 12vw;
+  max-height: 200px;
+  width: 12vw;
+  max-width: 200px;
   border: 1px solid black;
   background: blue;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 10rem;
-}
-
-.box:hover {
-  background: lightblue;
-  cursor: crosshair;
 }
 
 .popUp {
@@ -96,6 +94,7 @@ body {
 
 .player .imageContainer {
   width: 300px;
+  /* background: red; */
 }
 
 .player img {
